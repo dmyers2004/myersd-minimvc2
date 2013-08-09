@@ -24,10 +24,10 @@ $c['Request'] = $c->share(function($c) {
     return new \Symfony\Component\HttpFoundation\Request($c['input']['get'],$c['input']['post'],$c['input']['user'],$c['input']['cookie'],$c['input']['files'],$c['input']['server']);
 });
 
-$c['Response'] = $c->share(function($c) {
+$c['Response'] = $c->share(function() {
 	return new \Symfony\Component\HttpFoundation\Response();
 });
-
+ 
 $c['Router'] = $c->share(function($c) {
 	return new Router($c);
 });
@@ -42,8 +42,7 @@ $c['Dispatcher'] = $c->share(function($c) {
 $c['Router']->route();
 $c['Dispatcher']->dispatch();
 
-//$c['Response']->setContent('Hello World');
-$c['Response']->headers->set('Content-Type', 'text/plain');
+$c['Response']->headers->set('Content-Type', 'text/html');
 $c['Response']->setStatusCode(200);
 $c['Response']->setCharset('UTF-8');
 $c['Response']->prepare($c['Request']);
