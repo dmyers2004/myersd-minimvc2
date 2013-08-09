@@ -1,0 +1,10 @@
+{
+    "require": {
+        "symfony/http-foundation": "2.2.*@dev",
+        "pimple/pimple": "1.0.*@dev",
+        "monolog/monolog": "1.2.*",
+        "filp/whoops": "dev-master",
+				"desarrolla2/cache": "dev-master",
+				"vlucas/valitron": "dev-master"
+    }
+}
