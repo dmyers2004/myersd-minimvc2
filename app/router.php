@@ -16,7 +16,7 @@ class Router
 	{
 		/* build our route URI format - it's a little different then most */
 		/* [http|https]/[Ajax|]/[Get|Post|Delete|Put]/uri */
-		$this->route = $this->route_raw = ($this->c['Request.extras']['is_https'] ? 'https' : 'http').'/'.($this->c['Request.extras']['is_ajax'] ? 'Ajax' : '').'/'.$this->c['Request.extras']['request'].'/'.$this->c['Request.extras']['uri'];
+		$this->route = $this->route_raw = $this->c['Request']->getScheme().'/'.($this->c['Request']->isXmlHttpRequest() ? 'Ajax' : '').'/'.ucwords($this->c['Request']->getMethod()).'/'.ltrim($this->c['Request']->getPathInfo(),'/');
 
 		/* rewrite dispatch route */
 		foreach ($this->c['routes'] as $regexpath => $switchto) {
