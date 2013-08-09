@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (!ini_get('date.timezone')) {
 	date_default_timezone_set('UTC');
@@ -27,7 +27,29 @@ $c['Request'] = $c->share(function($c) {
 $c['Response'] = $c->share(function() {
 	return new \Symfony\Component\HttpFoundation\Response();
 });
+
+$c['Router'] = $c->share(function($c) {
+	return new \Symfony\Component\Routing();
+});
+
+$routes = new \Symfony\Component\Routing\RouteCollection();
+
+$routes->add('leap_year', new \Symfony\Component\Routing\Route('/is_leap_year/{year}',array('year' => null, '_controller' => 'Calendar\\Controller\\LeapYearController::indexAction')));
+$routes->add('root', new \Symfony\Component\Routing\Route('/', array('_controller' => 'Calendar\\Controller\\MainController::indexAction')));
+$routes->add('hello', new \Symfony\Component\Routing\Route('/hello/{name}',array('name' => null, '_controller' => 'Calendar\\Controller\\MainController::helloAction')));
+
+/* Set up the context and establish whether this request matches a route */
+$context = new \Symfony\Component\Routing\RequestContext();
+$context->fromRequest($c['Request']);
+$matcher = new Symfony\Component\Routing\Matcher\UrlMatcher($routes, $context);
  
+$match = $matcher->match($c['Request']->getPathInfo());
+
+print_r($match);
+
+die();
+
+/*
 $c['Router'] = $c->share(function($c) {
 	return new Router($c);
 });
@@ -35,6 +57,7 @@ $c['Router'] = $c->share(function($c) {
 $c['Dispatcher'] = $c->share(function($c) {
 	return new dispatcher($c);
 });
+*/
 
 //$cookies = new Symfony\Component\HttpFoundation\Cookie();
 
